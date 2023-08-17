@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Conversor de Moeda</title>
+</head>
+<body>
+    <h1>Conversor de Moeda</h1>
+    
+    <label for="fromCurrency">De:</label>
+    <select id="fromCurrency">
+        <option value="USD">Dólar Americano (USD)</option>
+        <option value="EUR">Euro (EUR)</option>
+        <option value="JPY">Iene Japonês (JPY)</option>
+        <option value="REAL"> Real(R$) </option>
+        <!-- Adicione mais opções de moedas conforme necessário -->
+    </select>
+    
+    <label for="amount">Valor:</label>
+    <input type="number" id="amount" placeholder="Insira o valor" />
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Conversor de Moeda</title>
+</head>
+<body>
+    <h1>Conversor de Moeda</h1>
+    
+    <label for="fromCurrency">De:</label>
+    <select id="fromCurrency">
+        <option value="USD">Dólar Americano (USD)</option>
+        <option value="EUR">Euro (EUR)</option>
+        <option value="JPY">Iene Japonês (JPY)</option>
+        <option value="BRL">Real (BRL)</option>
+        <!-- Adicione mais opções de moedas conforme necessário -->
+    </select>
+    
+    <label for="amount">Valor:</label>
+    <input type="number" id="amount" placeholder="Insira o valor" />
+    
+    <label for="toCurrency">Para:</label>
+    <select id="toCurrency">
+        <option value="USD">Dólar Americano (USD)</option>
+        <option value="EUR">Euro (EUR)</option>
+        <option value="JPY">Iene Japonês (JPY)</option>
+        <option value="BRL">Real (BRL)</option>
+        <!-- Adicione mais opções de moedas conforme necessário -->
+    </select>
+    
+    <button onclick="convertCurrency()">Converter</button>
+    
+    <h2>Resultado:</h2>
+    <p id="result"></p>
+    
+    <script>
+        function convertCurrency() {
+            const fromCurrency = document.getElementById("fromCurrency").value;
+            const toCurrency = document.getElementById("toCurrency").value;
+            const amount = parseFloat(document.getElementById("amount").value);
+
+            fetch(`https://api.apilayer.com/exchangerates_data/latest?base=${fromCurrency}&symbols=${toCurrency}&apikey=YOUR_API_KEY`)
+                .then(response => response.json())
+                .then(data => {
+                    const exchangeRate = data.rates[toCurrency];
+                    const convertedAmount = (amount * exchangeRate).toFixed(2);
+                    document.getElementById("result").textContent = `${amount} ${fromCurrency} é igual a ${convertedAmount} ${toCurrency}`;
+                })
+                .catch(error => {
+                    console.error("Erro ao converter moeda:", error);
+                });
+        }
+    </script>
+   
+    <center>
+        <img src="dolar.jpg" width="750" height="400" />
+    </center>
+   
+    <a href="https://www.oanda.com/currency-converter/pt/from=EUR&to=USD&amount=1">Conversor de moedas</a>
+</body>
+</html>
